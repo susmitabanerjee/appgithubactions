@@ -14,7 +14,7 @@ on:
 
 jobs:          #Entire event will run on this app and test on ununtu as mentioned
     test:
-        runs-on: ununtu-latest    #specify any container to use
+        runs-on: ubuntu-latest    #specify any container to use
 
         steps: #Specify each steps in blocks for execuation of the workflow
             #Step 1: Check out the code from the repository
