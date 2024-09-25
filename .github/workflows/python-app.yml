@@ -1,0 +1,76 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python CI #Key value Pair
+
+#Trigger the workflow on any push to the main branch or pull request
+on:
+    push: #Event
+        branches:
+            - main
+    pull_request:  #Event
+        branches:
+            - main #we can specify multiple main branches
+
+jobs:          #Entire event will run on this app and test on ununtu as mentioned
+    test:
+        runs-on: ununtu-latest    #specify any container to use
+
+        steps: #Specify each steps in blocks for execuation of the workflow
+            #Step 1: Check out the code from the repository
+            - name: check out code
+              uses: actions/checkout@v2 
+                #pre-built actions to check out the code from repository and with respect to different actions versions may change with added functionality
+            
+            #Step 2: Set up Python environment
+            - name: Set up Python
+              uses: actions/setup-python@v2    #Used to create python environemnt also can change the versions with added functionality
+              with:
+                python-version: '3.8' 
+
+            #Step 3: Install dependencies
+            - name: Install dependencies
+              run:
+                python -m pip install --upgrade pip 
+                pip install -r requirements.txt   #our reuquirements will get installed
+
+            #Step 4: Run tests
+            - name: Run tests  
+              run: pytest  #run the command in the container and it starts looking for the test folder and then it executes all the unit test cases
+
+# name: Python application
+
+# on:
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+
+# permissions:
+  # contents: read
+
+# jobs:
+  # build:
+
+    # runs-on: ubuntu-latest
+
+    # steps:
+    # - uses: actions/checkout@v4
+    # - name: Set up Python 3.10
+    #   uses: actions/setup-python@v3
+    #   with:
+    #     python-version: "3.10"
+    # - name: Install dependencies
+      # run: |
+    #     python -m pip install --upgrade pip
+    #     pip install flake8 pytest
+    #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    # - name: Lint with flake8
+    #   run: |
+    #     # stop the build if there are Python syntax errors or undefined names
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    # - name: Test with pytest
+    #   run: |
+        # pytest
