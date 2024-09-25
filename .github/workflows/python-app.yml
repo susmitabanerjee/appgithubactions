@@ -1,42 +1,41 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python CI #Key value Pair
+name: Python CI
 
-#Trigger the workflow on any push to the main branch or pull request
+# Trigger the workflow on any push to the main branch or pull request
 on:
-    push: #Event
-        branches:
-            - main
-    pull_request:  #Event
-        branches:
-            - main #we can specify multiple main branches
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-jobs:          #Entire event will run on this app and test on ununtu as mentioned
-    test:
-        runs-on: ubuntu-latest    #specify any container to use
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-        steps: #Specify each steps in blocks for execuation of the workflow
-            #Step 1: Check out the code from the repository
-            - name: check out code
-              uses: actions/checkout@v2 
-                #pre-built actions to check out the code from repository and with respect to different actions versions may change with added functionality
-            
-            #Step 2: Set up Python environment
-            - name: Set up Python
-              uses: actions/setup-python@v2    #Used to create python environemnt also can change the versions with added functionality
-              with:
-                python-version: '3.8' 
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Check out code
+        uses: actions/checkout@v2
 
-            #Step 3: Install dependencies
-            - name: Install dependencies
-              run: |
-                python -m pip install --upgrade pip 
-                pip install -r requirements.txt   #our reuquirements will get installed
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-            #Step 4: Run tests
-            - name: Run tests  
-              run: pytest  #run the command in the container and it starts looking for the test folder and then it executes all the unit test cases
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: pytest
 
 # name: Python application
 
